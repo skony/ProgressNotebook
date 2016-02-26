@@ -1,21 +1,41 @@
-package com.example.piotrek.progressnotebook;
+package pl.progressnotebook.activities;
 
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
+
+import com.example.piotrek.progressnotebook.R;
 
 import java.util.Calendar;
 
+import pl.progress.notebook.gridviews.GridViewSetsAdapter;
+import pl.progressnotebook.activities.fragments.DatePickerFragment;
+
 public class StartActivity extends AppCompatActivity {
+
+    private String[] WORKOUT_SETS = new String[] {
+            "recovery", "new set" };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
         setDefaultDate();
+
+        GridView gridview = (GridView) findViewById(R.id.workout_sets_gridview);
+        gridview.setAdapter(new GridViewSetsAdapter(this, WORKOUT_SETS));
+
+        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v,
+                                    int position, long id) {
+
+            }
+        });
+
         //Toolbar startToolbar = (Toolbar) findViewById(R.id.start_toolbar);
         //setSupportActionBar(startToolbar);
     }

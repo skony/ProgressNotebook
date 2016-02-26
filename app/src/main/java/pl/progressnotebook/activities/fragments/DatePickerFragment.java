@@ -1,13 +1,14 @@
-package com.example.piotrek.progressnotebook;
+package pl.progressnotebook.activities.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.widget.Button;
 import android.widget.DatePicker;
 
 import java.util.Calendar;
+
+import pl.progressnotebook.activities.StartActivity;
 
 /**
  * Created by piotr on 25.02.16.
