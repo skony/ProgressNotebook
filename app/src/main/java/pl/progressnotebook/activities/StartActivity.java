@@ -1,8 +1,10 @@
 package pl.progressnotebook.activities;
 
+import android.content.Intent;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -33,6 +35,12 @@ public class StartActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
 
+                String tag = (String) v.getTag();
+
+                if(tag.equals("recovery")){
+                    Intent intent = new Intent(getApplicationContext(), RecoveryActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 

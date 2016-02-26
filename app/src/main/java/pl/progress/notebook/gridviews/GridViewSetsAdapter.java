@@ -19,6 +19,8 @@ public class GridViewSetsAdapter extends BaseAdapter{
 
     private Context mContext;
     private String[] setsList;
+    String RECOVERY = "recovery";
+    String NEW_SET = "new_set";
 
     public GridViewSetsAdapter(Context c, String[] setsList) {
         mContext = c;
@@ -53,10 +55,8 @@ public class GridViewSetsAdapter extends BaseAdapter{
 
             gridView = new View(mContext);
 
-            // get layout from mobile.xml
             gridView = inflater.inflate(R.layout.workout_set, null);
 
-            // set image based on selected text
             ImageView imageView = (ImageView) gridView
                     .findViewById(R.id.grid_item_image);
 
@@ -64,8 +64,10 @@ public class GridViewSetsAdapter extends BaseAdapter{
 
             if (setName.equals("recovery")) {
                 imageView.setImageResource(R.drawable.ic_weekend_black_24dp);
+                gridView.setTag(RECOVERY);
             } else if (setName.equals("new set")) {
                 imageView.setImageResource(R.drawable.ic_fitness_center_black_24dp);
+                gridView.setTag(NEW_SET);
             }
 
         } else {
