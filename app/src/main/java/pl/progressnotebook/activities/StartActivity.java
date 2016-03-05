@@ -41,6 +41,10 @@ public class StartActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), RecoveryActivity.class);
                     startActivity(intent);
                 }
+                else if(tag.equals("new set")){
+                    Intent intent = new Intent(getApplicationContext(), WorkoutSetActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 

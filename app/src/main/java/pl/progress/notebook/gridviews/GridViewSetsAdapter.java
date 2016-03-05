@@ -20,7 +20,7 @@ public class GridViewSetsAdapter extends BaseAdapter{
     private Context mContext;
     private String[] setsList;
     String RECOVERY = "recovery";
-    String NEW_SET = "new_set";
+    String NEW_SET = "new set";
 
     public GridViewSetsAdapter(Context c, String[] setsList) {
         mContext = c;
