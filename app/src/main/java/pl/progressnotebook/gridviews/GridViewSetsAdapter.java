@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.piotrek.progressnotebook.R;
 
@@ -56,17 +57,22 @@ public class GridViewSetsAdapter extends BaseAdapter{
 
             gridView = inflater.inflate(R.layout.workout_set, null);
 
-            ImageView imageView = (ImageView) gridView
-                    .findViewById(R.id.grid_item_image);
+            ImageView imageView = (ImageView) gridView.findViewById(R.id.grid_item_image);
+            TextView textView = (TextView) gridView.findViewById(R.id.grid_item_text);
 
-            String setName = setsList[position].getName();
+            String nameOfSet = setsList[position].getName();
 
-            if (setName.equals("Recovery")) {
+            if (nameOfSet.equals("Recovery")) {
                 imageView.setImageResource(R.drawable.ic_weekend_black_24dp);
+                textView.setText(nameOfSet);
                 gridView.setTag(RECOVERY);
-            } else if (setName.equals("New Set")) {
+            } else if (nameOfSet.equals("New Set")) {
                 imageView.setImageResource(R.drawable.ic_fitness_center_black_24dp);
+                textView.setText(nameOfSet);
                 gridView.setTag(NEW_SET);
+            } else if (!nameOfSet.isEmpty()) {
+                imageView.setImageResource(R.drawable.ic_fitness_center_black_24dp);
+                textView.setText(nameOfSet);
             }
 
         } else {

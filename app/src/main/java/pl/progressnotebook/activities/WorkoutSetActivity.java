@@ -38,13 +38,13 @@ public class WorkoutSetActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_set);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.exercises_recycler_view);
+       /* mRecyclerView = (RecyclerView) findViewById(R.id.exercises_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mDataSet = new Exercise[]{};
         mAdapter = new RecyclerViewExercisesAdapter(mDataSet);
-        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(mAdapter);*/
 
         dbHelper = new AppDbHelper(this);
         db = dbHelper.getWritableDatabase();

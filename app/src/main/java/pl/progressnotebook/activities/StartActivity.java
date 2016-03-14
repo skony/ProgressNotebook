@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.example.piotrek.progressnotebook.R;
 
@@ -49,14 +50,21 @@ public class StartActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
 
-                String tag = (String) v.getTag();
+                String nameOfSet = ((TextView) v.findViewById(R.id.grid_item_text)).getText().toString();
 
-                if(tag.equals("recovery")){
+                if(nameOfSet.equals("recovery")){
                     Intent intent = new Intent(getApplicationContext(), RecoveryActivity.class);
                     startActivity(intent);
                 }
-                else if(tag.equals("new set")){
+                else if(nameOfSet.equals("new set")){
                     Intent intent = new Intent(getApplicationContext(), WorkoutSetActivity.class);
+                    startActivity(intent);
+                }
+                else if(!nameOfSet.isEmpty()){
+                    Intent intent = new Intent(getApplicationContext(), WorkoutSetActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("name_of_set", nameOfSet);
+                    intent.putExtras(b);
                     startActivity(intent);
                 }
             }
