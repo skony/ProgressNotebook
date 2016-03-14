@@ -3,11 +3,68 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/exercise_name" />
+
+        <EditText
+            android:id="@+id/new_exercise_name_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/exercise_load" />
+
+        <EditText
+            android:id="@+id/new_exercise_load_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/exercise_series" />
+
+        <EditText
+            android:id="@+id/exercise_series_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/add_exercise_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:padding="10dp"
-        android:text="welcome" />
+        android:text="@string/add_exercise"
+        android:onClick="addNewExercise"/>
 
 </LinearLayout>

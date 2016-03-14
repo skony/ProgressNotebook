@@ -1,10 +1,11 @@
 package pl.progressnotebook.activities;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -14,13 +15,22 @@ import com.example.piotrek.progressnotebook.R;
 
 import java.util.Calendar;
 
-import pl.progress.notebook.gridviews.GridViewSetsAdapter;
+import pl.progressnotebook.db.AppDbHelper;
+import pl.progressnotebook.db.DbContract;
+import pl.progressnotebook.gridviews.GridViewSetsAdapter;
 import pl.progressnotebook.activities.fragments.DatePickerFragment;
+import pl.progressnotebook.models.WorkoutSet;
 
 public class StartActivity extends AppCompatActivity {
 
     private String[] WORKOUT_SETS = new String[] {
             "recovery", "new set" };
+    private SQLiteDatabase db;
+    private AppDbHelper dbHelper;
+    private WorkoutSet[] mDataSet;
+    private WorkoutSet RECOVERY;
+    private WorkoutSet NEW_SET;
+    private final int DEFAULT_SETS_NUM = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +38,12 @@ public class StartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
         setDefaultDate();
 
+        dbHelper = new AppDbHelper(this);
+        db = dbHelper.getWritableDatabase();
+        initDataSet();
+
         GridView gridview = (GridView) findViewById(R.id.workout_sets_gridview);
-        gridview.setAdapter(new GridViewSetsAdapter(this, WORKOUT_SETS));
+        gridview.setAdapter(new GridViewSetsAdapter(this, mDataSet));
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
@@ -52,6 +66,12 @@ public class StartActivity extends AppCompatActivity {
         //setSupportActionBar(startToolbar);
     }
 
+    @Override
+    protected void onRestart(){
+        super.onRestart();
+        initDataSet();
+    }
+
     public void showDatePickerDialog(View v) {
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
@@ -71,5 +91,44 @@ public class StartActivity extends AppCompatActivity {
         String pickedDate = Integer.toString(day) + "/" + Integer.toString(month + 1) + "/" + Integer.toString(year);
         Button pickDateButton = (Button) findViewById(R.id.pick_date);
         pickDateButton.setText(pickedDate);
+    }
+
+    public void initDataSet(){
+        String[] projection = {
+                DbContract.WorkoutSets._ID,
+                DbContract.WorkoutSets.COLUMN_NAME_NAME,
+        };
+
+        Cursor cursor = db.query(
+                DbContract.WorkoutSets.TABLE_NAME,  // The table to query
+                projection,                               // The columns to return
+                null,                                // The columns for the WHERE clause
+                null,                            // The values for the WHERE clause
+                null,                                     // don't group the rows
+                null,                                     // don't filter by row groups
+                null                                 // The sort order
+        );
+
+        int setsNum = cursor.getCount();
+        RECOVERY = new WorkoutSet(0, "Recovery");
+        NEW_SET = new WorkoutSet(1, "New Set");
+        mDataSet = new WorkoutSet[setsNum + DEFAULT_SETS_NUM];
+
+        if(setsNum == 0){
+            mDataSet[0] = RECOVERY;
+            mDataSet[1] = NEW_SET;
+        }
+        else{
+            mDataSet[0] = RECOVERY;
+            mDataSet[1] = NEW_SET;
+            cursor.moveToFirst();
+
+            for(int i=DEFAULT_SETS_NUM; i<setsNum+DEFAULT_SETS_NUM; i++){
+                WorkoutSet workoutSet = new WorkoutSet();
+                workoutSet.setId( cursor.getLong( cursor.getColumnIndexOrThrow( DbContract.WorkoutSets._ID ) ) );
+                workoutSet.setName( cursor.getString( cursor.getColumnIndexOrThrow( DbContract.WorkoutSets.COLUMN_NAME_NAME ) ) );
+                mDataSet[i] = workoutSet;
+            }
+        }
     }
 }

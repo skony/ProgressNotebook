@@ -1,4 +1,4 @@
-package pl.progress.notebook.gridviews;
+package pl.progressnotebook.gridviews;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,11 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.piotrek.progressnotebook.R;
 
-import pl.progressnotebook.activities.StartActivity;
+import pl.progressnotebook.models.WorkoutSet;
 
 /**
  * Created by piotr on 26.02.16.
@@ -18,11 +17,11 @@ import pl.progressnotebook.activities.StartActivity;
 public class GridViewSetsAdapter extends BaseAdapter{
 
     private Context mContext;
-    private String[] setsList;
+    private WorkoutSet[] setsList;
     String RECOVERY = "recovery";
     String NEW_SET = "new set";
 
-    public GridViewSetsAdapter(Context c, String[] setsList) {
+    public GridViewSetsAdapter(Context c, WorkoutSet[] setsList) {
         mContext = c;
         this.setsList = setsList;
     }
@@ -60,12 +59,12 @@ public class GridViewSetsAdapter extends BaseAdapter{
             ImageView imageView = (ImageView) gridView
                     .findViewById(R.id.grid_item_image);
 
-            String setName = setsList[position];
+            String setName = setsList[position].getName();
 
-            if (setName.equals("recovery")) {
+            if (setName.equals("Recovery")) {
                 imageView.setImageResource(R.drawable.ic_weekend_black_24dp);
                 gridView.setTag(RECOVERY);
-            } else if (setName.equals("new set")) {
+            } else if (setName.equals("New Set")) {
                 imageView.setImageResource(R.drawable.ic_fitness_center_black_24dp);
                 gridView.setTag(NEW_SET);
             }

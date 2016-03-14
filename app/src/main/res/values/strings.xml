@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">ProgressNotebook</string>
     <string name="pick_date">Pick a date</string>
+    <string name="exercise_name">Exercise name:</string>
+    <string name="exercise_load">Load:</string>
+    <string name="exercise_series">Number of series:</string>
+    <string name="add_exercise">Add</string>
+    <string name="save_workout_set">Save</string>
 </resources>
