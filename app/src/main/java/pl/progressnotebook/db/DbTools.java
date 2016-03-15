@@ -29,7 +29,7 @@ public class DbTools {
     public static void update(SQLiteDatabase db, String tableName, String colName, String oldValue,
                               String newValue){
         ContentValues values = new ContentValues();
-        values.put(tableName, newValue);
+        values.put(colName, newValue);
         String selection = colName + " LIKE ?";
         String[] selectionArgs = { oldValue };
         int count = db.update(
