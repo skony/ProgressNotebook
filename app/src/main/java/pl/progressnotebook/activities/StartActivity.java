@@ -24,14 +24,15 @@ import pl.progressnotebook.models.WorkoutSet;
 
 public class StartActivity extends AppCompatActivity {
 
-    private String[] WORKOUT_SETS = new String[] {
-            "recovery", "new set" };
+
     private SQLiteDatabase db;
     private AppDbHelper dbHelper;
     private WorkoutSet[] mDataSet;
     private WorkoutSet RECOVERY;
     private WorkoutSet NEW_SET;
     private final int DEFAULT_SETS_NUM = 2;
+    private GridView mGridView;
+    private GridViewSetsAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,24 +44,23 @@ public class StartActivity extends AppCompatActivity {
         db = dbHelper.getWritableDatabase();
         initDataSet();
 
-        GridView gridview = (GridView) findViewById(R.id.workout_sets_gridview);
-        gridview.setAdapter(new GridViewSetsAdapter(this, mDataSet));
+        mGridView = (GridView) findViewById(R.id.workout_sets_gridview);
+        mAdapter = new GridViewSetsAdapter(this, mDataSet);
+        mGridView.setAdapter(mAdapter);
 
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
 
                 String nameOfSet = ((TextView) v.findViewById(R.id.grid_item_text)).getText().toString();
 
-                if(nameOfSet.equals("recovery")){
+                if (nameOfSet.equals(RECOVERY.getName())) {
                     Intent intent = new Intent(getApplicationContext(), RecoveryActivity.class);
                     startActivity(intent);
-                }
-                else if(nameOfSet.equals("new set")){
+                } else if (nameOfSet.equals(NEW_SET.getName())) {
                     Intent intent = new Intent(getApplicationContext(), WorkoutSetActivity.class);
                     startActivity(intent);
-                }
-                else if(!nameOfSet.isEmpty()){
+                } else if (!nameOfSet.isEmpty()) {
                     Intent intent = new Intent(getApplicationContext(), WorkoutSetActivity.class);
                     Bundle b = new Bundle();
                     b.putString("name_of_set", nameOfSet);
@@ -78,6 +78,8 @@ public class StartActivity extends AppCompatActivity {
     protected void onRestart(){
         super.onRestart();
         initDataSet();
+        mAdapter = new GridViewSetsAdapter(this, mDataSet);
+        mGridView.setAdapter(mAdapter);
     }
 
     public void showDatePickerDialog(View v) {
@@ -136,6 +138,7 @@ public class StartActivity extends AppCompatActivity {
                 workoutSet.setId( cursor.getLong( cursor.getColumnIndexOrThrow( DbContract.WorkoutSets._ID ) ) );
                 workoutSet.setName( cursor.getString( cursor.getColumnIndexOrThrow( DbContract.WorkoutSets.COLUMN_NAME_NAME ) ) );
                 mDataSet[i] = workoutSet;
+                cursor.moveToNext();
             }
         }
     }

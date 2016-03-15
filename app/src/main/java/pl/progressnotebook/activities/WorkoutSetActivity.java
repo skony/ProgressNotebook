@@ -15,6 +15,7 @@ import com.example.piotrek.progressnotebook.R;
 import pl.progressnotebook.activities.fragments.NewExerciseFragment;
 import pl.progressnotebook.db.AppDbHelper;
 import pl.progressnotebook.db.DbContract;
+import pl.progressnotebook.db.DbTools;
 import pl.progressnotebook.models.Exercise;
 import pl.progressnotebook.recyclerviews.RecyclerViewExercisesAdapter;
 
@@ -25,7 +26,8 @@ import static pl.progressnotebook.db.DbContract.*;
  */
 public class WorkoutSetActivity extends AppCompatActivity {
 
-    private int id;
+    private String nameOfSet;
+    private EditText mEditText;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -48,6 +50,11 @@ public class WorkoutSetActivity extends AppCompatActivity {
 
         dbHelper = new AppDbHelper(this);
         db = dbHelper.getWritableDatabase();
+
+        Bundle bundle = getIntent().getExtras();
+        nameOfSet = bundle!=null ? bundle.getString("name_of_set") : "";
+        mEditText = (EditText) findViewById(R.id.workout_set_name);
+        mEditText.setText(nameOfSet);
     }
 
     public void showNewExerciseDialog(View v){
@@ -56,15 +63,31 @@ public class WorkoutSetActivity extends AppCompatActivity {
     }
 
     public void saveWorkoutSet(View v){
-        EditText editText = (EditText) findViewById(R.id.workout_set_name);
-        ContentValues values = new ContentValues();
-        values.put(DbContract.WorkoutSets.COLUMN_NAME_NAME, editText.getText().toString());
+        String currentNameOfSet =  mEditText.getText().toString();
 
-        long newRowId;
-        newRowId = db.insert(
-                DbContract.WorkoutSets.TABLE_NAME,
-                null,
-                values);
+        if(nameOfSet.isEmpty() && !currentNameOfSet.isEmpty()) {
+            long newRowId = DbTools.insert(db,
+                    WorkoutSets.TABLE_NAME,
+                    WorkoutSets.COLUMN_NAME_NAME,
+                    currentNameOfSet
+            );
+        }
+        else if (!nameOfSet.isEmpty() && currentNameOfSet.isEmpty()) {
+            DbTools.delete(db,
+                    WorkoutSets.TABLE_NAME,
+                    WorkoutSets.COLUMN_NAME_NAME,
+                    nameOfSet
+            );
+        }
+        else if(!nameOfSet.isEmpty() && !currentNameOfSet.isEmpty()
+                && !nameOfSet.equals(currentNameOfSet)){
+            DbTools.update(db,
+                    WorkoutSets.TABLE_NAME,
+                    WorkoutSets.COLUMN_NAME_NAME,
+                    nameOfSet,
+                    currentNameOfSet
+            );
+        }
 
         finish();
     }

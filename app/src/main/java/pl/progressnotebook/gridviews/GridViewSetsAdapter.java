@@ -27,6 +27,10 @@ public class GridViewSetsAdapter extends BaseAdapter{
         this.setsList = setsList;
     }
 
+    public void setSetsList(WorkoutSet[] setsList) {
+        this.setsList = setsList;
+    }
+
     @Override
     public int getCount() {
 
