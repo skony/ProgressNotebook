@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -70,8 +72,8 @@ public class StartActivity extends AppCompatActivity {
             }
         });
 
-        //Toolbar startToolbar = (Toolbar) findViewById(R.id.start_toolbar);
-        //setSupportActionBar(startToolbar);
+        Toolbar startToolbar = (Toolbar) findViewById(R.id.start_toolbar);
+        setSupportActionBar(startToolbar);
     }
 
     @Override
@@ -80,6 +82,13 @@ public class StartActivity extends AppCompatActivity {
         initDataSet();
         mAdapter = new GridViewSetsAdapter(this, mDataSet);
         mGridView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_start_toolbar, menu);
+        return true;
     }
 
     public void showDatePickerDialog(View v) {
