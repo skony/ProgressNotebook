@@ -8,14 +8,35 @@
 
     <ListView android:id="@android:id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="#00FF00"
         android:layout_weight="1"
         android:drawSelectorOnTop="false"/>
 
     <TextView android:id="@android:id/empty"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="#FF0000"
         android:text="No data"/>
+
+    <TextView
+        android:id="@+id/tvIsConnected"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="#FF0000"
+        android:textColor="#FFF"
+        android:textSize="18dp"
+        android:layout_marginBottom="5dp"
+        android:text="is connected? " />
+
+    <EditText
+        android:id="@+id/etResponse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_marginTop="10dp"
+        android:inputType="textMultiLine" >\
+        <requestFocus />
+    </EditText>
 </LinearLayout>

@@ -18,7 +18,7 @@ import java.net.URL;
  */
 public class ApiManager {
 
-    public String GET(String urlString) {
+    public static String GET(String urlString) {
         StringBuffer chaine = new StringBuffer("");
 
         try {
@@ -57,28 +57,12 @@ public class ApiManager {
 
     }
 
-    public boolean isConnected(Context context){
+    public static boolean isConnected(Context context){
         ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Activity.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected())
             return true;
         else
             return false;
-    }
-
-    private class HttpAsyncTask extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected String doInBackground(String... urls) {
-
-            return GET(urls[0]);
-        }
-
-        // onPostExecute displays the results of the AsyncTask.
-        @Override
-        protected void onPostExecute(String result) {
-            //Toast.makeText(getBaseContext(), "Received!", Toast.LENGTH_LONG).show();
-            //etResponse.setText(result);
-        }
     }
 }
