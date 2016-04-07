@@ -1,14 +1,21 @@
 package pl.progressnotebook.activities;
 
+import android.app.SearchManager;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.SearchView;
 
 import com.example.piotrek.progressnotebook.R;
 
@@ -55,11 +62,33 @@ public class WorkoutSetActivity extends AppCompatActivity {
         nameOfSet = bundle!=null ? bundle.getString("name_of_set") : "";
         mEditText = (EditText) findViewById(R.id.workout_set_name);
         mEditText.setText(nameOfSet);
+
+        Toolbar startToolbar = (Toolbar) findViewById(R.id.workout_set_toolbar);
+        setSupportActionBar(startToolbar);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        // Inflate the options menu from XML
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_workout_set_toolbar, menu);
+
+        // Get the SearchView and set the searchable configuration
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        // Assumes current activity is the searchable activity
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+
+        return true;
     }
 
     public void showNewExerciseDialog(View v){
-        DialogFragment newFragment = new NewExerciseFragment();
-        newFragment.show(getSupportFragmentManager(), "newExercise");
+        //DialogFragment newFragment = new NewExerciseFragment();
+        //newFragment.show(getSupportFragmentManager(), "newExercise");
+        Intent intent = new Intent(getApplicationContext(), SearchExerciseActivity.class);
+        startActivity(intent);
     }
 
     public void saveWorkoutSet(View v){
