@@ -1,14 +1,11 @@
 package pl.progressnotebook.activities;
 
 import android.app.SearchManager;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -19,12 +16,9 @@ import android.widget.SearchView;
 
 import com.example.piotrek.progressnotebook.R;
 
-import pl.progressnotebook.activities.fragments.NewExerciseFragment;
 import pl.progressnotebook.db.AppDbHelper;
-import pl.progressnotebook.db.DbContract;
 import pl.progressnotebook.db.DbTools;
 import pl.progressnotebook.models.Exercise;
-import pl.progressnotebook.recyclerviews.RecyclerViewExercisesAdapter;
 
 import static pl.progressnotebook.db.DbContract.*;
 
@@ -72,7 +66,7 @@ public class WorkoutSetActivity extends AppCompatActivity {
         super.onCreateOptionsMenu(menu);
         // Inflate the options menu from XML
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_workout_set_toolbar, menu);
+        inflater.inflate(R.menu.menu_search_exercise_toolbar, menu);
 
         // Get the SearchView and set the searchable configuration
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);

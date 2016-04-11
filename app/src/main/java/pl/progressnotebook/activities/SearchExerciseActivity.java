@@ -6,21 +6,33 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.piotrek.progressnotebook.R;
+
+import org.json.JSONException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import pl.progressnotebook.api.ApiManager;
 
 /**
  * Created by piotr on 30.03.16.
  */
-public class SearchExerciseActivity extends ListActivity {
+public class SearchExerciseActivity extends AppCompatActivity {
 
-    public EditText etResponse;
-    public TextView tvIsConnected;
+    private EditText etResponse;
+    private TextView tvIsConnected;
+    private ListView mListView;
+    private List<String> mData;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,6 +40,11 @@ public class SearchExerciseActivity extends ListActivity {
         setContentView(R.layout.activity_search_exercise);
         etResponse = (EditText) findViewById(R.id.etResponse);
         tvIsConnected = (TextView) findViewById(R.id.tvIsConnected);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.search_exercise_toolbar);
+        setSupportActionBar(toolbar);
+
+        mListView = (ListView) findViewById(R.id.exercises_list);
 
         if (ApiManager.isConnected(getApplicationContext())) {
             tvIsConnected.setBackgroundColor(0xFF00CC00);
@@ -37,21 +54,31 @@ public class SearchExerciseActivity extends ListActivity {
             tvIsConnected.setText("You are NOT conncted");
         }
 
-        new HttpAsyncTask().execute("http://hmkcode.appspot.com/rest/controller/get.json");
+        new HttpAsyncTask().execute();
     }
 
-    private class HttpAsyncTask extends AsyncTask<String, Void, String> {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_search_exercise_toolbar, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    private class HttpAsyncTask extends AsyncTask<Void, Void, Void> {
 
         @Override
-        protected String doInBackground(String... urls) {
-
-            return ApiManager.GET(urls[0]);
+        protected Void doInBackground(Void... urls) {
+            String getResult = ApiManager.GET("https://wger.de/api/v2/exercisecategory.json/");
+            mData = ApiManager.parseJson(getResult);
+            return null;
         }
 
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(Void result) {
             Toast.makeText(getBaseContext(), "Received!", Toast.LENGTH_LONG).show();
-            etResponse.setText(result);
+            //etResponse.setText(result);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(SearchExerciseActivity.this, R.layout.searched_element, mData);
+            mListView.setAdapter(adapter);
         }
     }
 }

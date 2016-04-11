@@ -6,17 +6,28 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by piotr on 30.03.16.
  */
 public class ApiManager {
+
+    private static final String TAG_COUNTS = "counts";
+    private static final String TAG_RESULTS = "results";
+    private static final String TAG_ID = "id";
+    private static final String TAG_NAME = "name";
 
     public static String GET(String urlString) {
         StringBuffer chaine = new StringBuffer("");
@@ -64,5 +75,23 @@ public class ApiManager {
             return true;
         else
             return false;
+    }
+
+    public static ArrayList<String> parseJson(String jsonStr)  {
+        ArrayList<String> result = new ArrayList<String>();
+
+        try {
+            JSONObject jsonObject = new JSONObject(jsonStr);
+            JSONArray jsonResults = jsonObject.getJSONArray(TAG_RESULTS);
+
+            for (int i = 0; i < jsonResults.length(); i++) {
+                String name = jsonResults.getJSONObject(i).getString(TAG_NAME);
+                result.add(name);
+            }
+        } catch (JSONException e) {
+            return result;
+        }
+
+        return result;
     }
 }
