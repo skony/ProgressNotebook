@@ -1,4 +1,4 @@
-package pl.progressnotebook.recyclerviews;
+package pl.progressnotebook.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

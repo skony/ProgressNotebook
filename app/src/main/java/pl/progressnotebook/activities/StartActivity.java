@@ -20,7 +20,7 @@ import java.util.Calendar;
 
 import pl.progressnotebook.db.AppDbHelper;
 import pl.progressnotebook.db.DbContract;
-import pl.progressnotebook.gridviews.GridViewSetsAdapter;
+import pl.progressnotebook.adapters.GridViewSetsAdapter;
 import pl.progressnotebook.activities.fragments.DatePickerFragment;
 import pl.progressnotebook.models.WorkoutSet;
 

@@ -3,9 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp">
+    android:layout_height="match_parent">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/search_exercise_toolbar"
@@ -20,30 +18,4 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <TextView android:id="@android:id/empty"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FF0000"
-        android:text="No data"/>
-
-    <TextView
-        android:id="@+id/tvIsConnected"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:background="#FF0000"
-        android:textColor="#FFF"
-        android:textSize="18dp"
-        android:layout_marginBottom="5dp"
-        android:text="is connected? " />
-
-    <EditText
-        android:id="@+id/etResponse"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:layout_marginTop="10dp"
-        android:inputType="textMultiLine" >\
-        <requestFocus />
-    </EditText>
 </LinearLayout>

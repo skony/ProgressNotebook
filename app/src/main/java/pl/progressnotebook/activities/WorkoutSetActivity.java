@@ -81,7 +81,7 @@ public class WorkoutSetActivity extends AppCompatActivity {
     public void showNewExerciseDialog(View v){
         //DialogFragment newFragment = new NewExerciseFragment();
         //newFragment.show(getSupportFragmentManager(), "newExercise");
-        Intent intent = new Intent(getApplicationContext(), SearchExerciseActivity.class);
+        Intent intent = new Intent(getApplicationContext(), ChooseCategoryActivity.class);
         startActivity(intent);
     }
 

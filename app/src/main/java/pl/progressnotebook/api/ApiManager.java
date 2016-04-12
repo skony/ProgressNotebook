@@ -19,6 +19,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.progressnotebook.models.Category;
+
 /**
  * Created by piotr on 30.03.16.
  */
@@ -77,16 +79,18 @@ public class ApiManager {
             return false;
     }
 
-    public static ArrayList<String> parseJson(String jsonStr)  {
-        ArrayList<String> result = new ArrayList<String>();
+    public static Category[] parseJson(String jsonStr)  {
+        Category[] result = null;
 
         try {
             JSONObject jsonObject = new JSONObject(jsonStr);
             JSONArray jsonResults = jsonObject.getJSONArray(TAG_RESULTS);
+            result = new Category[jsonResults.length()];
 
             for (int i = 0; i < jsonResults.length(); i++) {
                 String name = jsonResults.getJSONObject(i).getString(TAG_NAME);
-                result.add(name);
+                int id = jsonResults.getJSONObject(i).getInt(TAG_ID);
+                result[i] = new Category(id, name);
             }
         } catch (JSONException e) {
             return result;

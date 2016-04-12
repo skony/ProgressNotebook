@@ -1,4 +1,4 @@
-package pl.progressnotebook.gridviews;
+package pl.progressnotebook.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
