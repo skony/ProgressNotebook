@@ -2,11 +2,15 @@ package pl.progressnotebook.activities;
 
 import android.app.SearchManager;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.piotrek.progressnotebook.R;
+
+import pl.progressnotebook.api.ApiManager;
 
 /**
  * Created by piotr on 11.04.16.
@@ -32,6 +36,27 @@ public class SearchExerciseActivity extends AppCompatActivity {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
             //doMySearch(query);
+        }
+        else if(intent.getExtras().getString("category_id") != null) {
+
+        }
+    }
+
+    private class HttpAsyncTask extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected Void doInBackground(String... urls) {
+            String getResult = ApiManager.GET(urls[0]);
+            //mDataSet = ApiManager.parseJson(getResult);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            Toast.makeText(getBaseContext(), "Received!", Toast.LENGTH_LONG).show();
+            //etResponse.setText(result);
+            //CategoryAdapter adapter = new CategoryAdapter(ChooseCategoryActivity.this, mDataSet);
+            //mListView.setAdapter(adapter);
         }
     }
 }
