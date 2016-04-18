@@ -13,8 +13,6 @@ public final class DbContract {
 
         public static final String TABLE_NAME = "exercises";
         public static final String COLUMN_NAME_NAME = "name";
-        /*public static final String COLUMN_NAME_LOAD = "load";
-        public static final String COLUMN_NAME_SERIES = "series";*/
 
         protected static final String TEXT_TYPE = " TEXT";
         protected static final String COMMA_SEP = ",";
@@ -22,8 +20,6 @@ public final class DbContract {
                 "CREATE TABLE " + TABLE_NAME + " (" +
                         _ID + " INTEGER PRIMARY KEY," +
                         COLUMN_NAME_NAME + TEXT_TYPE +
-                        /*COLUMN_NAME_LOAD + TEXT_TYPE + COMMA_SEP +
-                        COLUMN_NAME_SERIES + TEXT_TYPE + COMMA_SEP +*/
                 " )";
 
         protected static final String SQL_DELETE_ENTRIES =

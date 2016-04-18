@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.example.piotrek.progressnotebook.R;
 
 import pl.progressnotebook.api.ApiManager;
+import pl.progressnotebook.globals.Globals;
 
 /**
  * Created by piotr on 11.04.16.
@@ -37,7 +38,7 @@ public class SearchExerciseActivity extends AppCompatActivity {
             String query = intent.getStringExtra(SearchManager.QUERY);
             //doMySearch(query);
         }
-        else if(intent.getExtras().getString("category_id") != null) {
+        else if(intent.getExtras().getString(Globals.CATEGORY_ID_NAME) != null) {
 
         }
     }
@@ -47,7 +48,7 @@ public class SearchExerciseActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(String... urls) {
             String getResult = ApiManager.GET(urls[0]);
-            //mDataSet = ApiManager.parseJson(getResult);
+            //mDataSet = ApiManager.parseCategoryFromJson(getResult);
             return null;
         }
 

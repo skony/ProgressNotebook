@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.piotrek.progressnotebook.R;
 
+import pl.progressnotebook.globals.Globals;
 import pl.progressnotebook.models.WorkoutSet;
 
 /**
@@ -19,8 +20,6 @@ public class GridViewSetsAdapter extends BaseAdapter{
 
     private Context mContext;
     private WorkoutSet[] setsList;
-    String RECOVERY = "recovery";
-    String NEW_SET = "new set";
 
     public GridViewSetsAdapter(Context c, WorkoutSet[] setsList) {
         mContext = c;
@@ -66,14 +65,14 @@ public class GridViewSetsAdapter extends BaseAdapter{
 
             String nameOfSet = setsList[position].getName();
 
-            if (nameOfSet.equals("Recovery")) {
+            if (nameOfSet.equals(Globals.RECOVERY_NAME)) {
                 imageView.setImageResource(R.drawable.ic_weekend_black_24dp);
                 textView.setText(nameOfSet);
-                gridView.setTag(RECOVERY);
-            } else if (nameOfSet.equals("New Set")) {
+                gridView.setTag(Globals.RECOVERY_NAME);
+            } else if (nameOfSet.equals(Globals.NEW_SET_NAME)) {
                 imageView.setImageResource(R.drawable.ic_fitness_center_black_24dp);
                 textView.setText(nameOfSet);
-                gridView.setTag(NEW_SET);
+                gridView.setTag(Globals.NEW_SET_NAME);
             } else if (!nameOfSet.isEmpty()) {
                 imageView.setImageResource(R.drawable.ic_fitness_center_black_24dp);
                 textView.setText(nameOfSet);

@@ -32,7 +32,7 @@ public class ApiManager {
     private static final String TAG_NAME = "name";
 
     public static String GET(String urlString) {
-        StringBuffer chaine = new StringBuffer("");
+        String resultStr = "";
 
         try {
             URL url = new URL(urlString);
@@ -43,19 +43,14 @@ public class ApiManager {
             connection.connect();
 
             InputStream inputStream = connection.getInputStream();
-
-            BufferedReader rd = new BufferedReader(new InputStreamReader(inputStream));
-            String line = "";
-            while ((line = rd.readLine()) != null) {
-                chaine.append(line);
-            }
+            resultStr = convertInputStreamToString(inputStream);
 
         } catch (IOException e) {
             // writing exception to log
             e.printStackTrace();
         }
 
-        return chaine.toString();
+        return resultStr;
     }
 
     private static String convertInputStreamToString(InputStream inputStream) throws IOException {
@@ -79,7 +74,7 @@ public class ApiManager {
             return false;
     }
 
-    public static Category[] parseJson(String jsonStr)  {
+    public static Category[] parseCategoryFromJson(String jsonStr)  {
         Category[] result = null;
 
         try {

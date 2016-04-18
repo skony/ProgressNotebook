@@ -29,10 +29,6 @@ public class WorkoutSetActivity extends AppCompatActivity {
 
     private String nameOfSet;
     private EditText mEditText;
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private Exercise[] mDataSet;
     private SQLiteDatabase db;
     private AppDbHelper dbHelper;
 
@@ -41,14 +37,6 @@ public class WorkoutSetActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_set);
 
-       /* mRecyclerView = (RecyclerView) findViewById(R.id.exercises_recycler_view);
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mDataSet = new Exercise[]{};
-        mAdapter = new RecyclerViewExercisesAdapter(mDataSet);
-        mRecyclerView.setAdapter(mAdapter);*/
-
         dbHelper = new AppDbHelper(this);
         db = dbHelper.getWritableDatabase();
 
@@ -56,31 +44,9 @@ public class WorkoutSetActivity extends AppCompatActivity {
         nameOfSet = bundle!=null ? bundle.getString("name_of_set") : "";
         mEditText = (EditText) findViewById(R.id.workout_set_name);
         mEditText.setText(nameOfSet);
-
-        Toolbar startToolbar = (Toolbar) findViewById(R.id.workout_set_toolbar);
-        setSupportActionBar(startToolbar);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        // Inflate the options menu from XML
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_search_exercise_toolbar, menu);
-
-        // Get the SearchView and set the searchable configuration
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        // Assumes current activity is the searchable activity
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
-
-        return true;
-    }
-
-    public void showNewExerciseDialog(View v){
-        //DialogFragment newFragment = new NewExerciseFragment();
-        //newFragment.show(getSupportFragmentManager(), "newExercise");
+    public void startNewExerciseSearching(View v){
         Intent intent = new Intent(getApplicationContext(), ChooseCategoryActivity.class);
         startActivity(intent);
     }

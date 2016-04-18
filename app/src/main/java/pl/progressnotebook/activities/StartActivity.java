@@ -22,17 +22,16 @@ import pl.progressnotebook.db.AppDbHelper;
 import pl.progressnotebook.db.DbContract;
 import pl.progressnotebook.adapters.GridViewSetsAdapter;
 import pl.progressnotebook.activities.fragments.DatePickerFragment;
+import pl.progressnotebook.globals.Globals;
 import pl.progressnotebook.models.WorkoutSet;
 
 public class StartActivity extends AppCompatActivity {
-
 
     private SQLiteDatabase db;
     private AppDbHelper dbHelper;
     private WorkoutSet[] mDataSet;
     private WorkoutSet RECOVERY;
     private WorkoutSet NEW_SET;
-    private final int DEFAULT_SETS_NUM = 2;
     private GridView mGridView;
     private GridViewSetsAdapter mAdapter;
 
@@ -86,7 +85,6 @@ public class StartActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_start_toolbar, menu);
         return true;
     }
@@ -129,9 +127,9 @@ public class StartActivity extends AppCompatActivity {
         );
 
         int setsNum = cursor.getCount();
-        RECOVERY = new WorkoutSet(0, "Recovery");
-        NEW_SET = new WorkoutSet(1, "New Set");
-        mDataSet = new WorkoutSet[setsNum + DEFAULT_SETS_NUM];
+        RECOVERY = new WorkoutSet(0, Globals.RECOVERY_NAME);
+        NEW_SET = new WorkoutSet(1, Globals.NEW_SET_NAME);
+        mDataSet = new WorkoutSet[setsNum + Globals.DEFAULT_SETS_NUM];
 
         if(setsNum == 0){
             mDataSet[0] = RECOVERY;
@@ -142,7 +140,7 @@ public class StartActivity extends AppCompatActivity {
             mDataSet[1] = NEW_SET;
             cursor.moveToFirst();
 
-            for(int i=DEFAULT_SETS_NUM; i<setsNum+DEFAULT_SETS_NUM; i++){
+            for(int i=Globals.DEFAULT_SETS_NUM; i<setsNum+Globals.DEFAULT_SETS_NUM; i++){
                 WorkoutSet workoutSet = new WorkoutSet();
                 workoutSet.setId( cursor.getLong( cursor.getColumnIndexOrThrow( DbContract.WorkoutSets._ID ) ) );
                 workoutSet.setName( cursor.getString( cursor.getColumnIndexOrThrow( DbContract.WorkoutSets.COLUMN_NAME_NAME ) ) );
